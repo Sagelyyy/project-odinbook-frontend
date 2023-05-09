@@ -1,8 +1,7 @@
 export async function load({ fetch }) {
 	const res = await fetch('https://localhost:9000/api/posts');
-	const data = await res.json();
-	console.log('data ', data);
+	const data: object = await res.json();
 	return {
-		hello: 'world'
+		...data
 	};
 }
