@@ -7,13 +7,9 @@
 
 {#each post as data}
 	<div class="post-card">
-		<img
-			class="profile-picture"
-			src={data.userId.profilePictureUrl}
-			alt={data.userId.displayName}
-		/>
+		<img class="profile-picture" src={data.userId.profilePictureUrl} alt={data.userId.firstName} />
 		<div class="post-content">
-			<p class="display-name">{data.userId.displayName}</p>
+			<p class="display-name">{data.userId.firstName}</p>
 			<p>{data.content}</p>
 		</div>
 	</div>
