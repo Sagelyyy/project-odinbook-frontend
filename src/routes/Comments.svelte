@@ -16,13 +16,10 @@
 			}
 		});
 		data = await response.json();
-		console.log(data);
 	};
 
 	onMount(fetchComments);
 </script>
-
-<CommentForm {postID} {fetchComments} />
 
 {#each data.comments as item (item._id)}
 	<div class="comment">
@@ -30,10 +27,12 @@
 		<div class="comment-content">
 			<span class="user-name">{item.userId.firstName}</span>
 			<p class="comment-text">{item.content}</p>
-			<span class="timestamp">{item.createdAt}</span>
+			<span class="timestamp">{item.date}</span>
 		</div>
 	</div>
 {/each}
+
+<CommentForm {postID} {fetchComments} />
 
 <style>
 	.comment {
@@ -65,6 +64,7 @@
 
 	.comment-text {
 		margin: 5px 0;
+		word-wrap: break-word;
 	}
 
 	.timestamp {

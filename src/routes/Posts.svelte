@@ -5,7 +5,6 @@
 	 * @type {any}
 	 */
 	export let post;
-	console.log(post);
 </script>
 
 {#each post as post}

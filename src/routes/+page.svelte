@@ -9,7 +9,6 @@
 	$: {
 		if (data) {
 			({ post } = data);
-			console.log(post);
 		} else {
 			post = undefined;
 		}
@@ -23,6 +22,11 @@
 {/if}
 
 <style>
+	:global(*) {
+		padding: 0;
+		margin: 0;
+	}
+
 	:global(:root) {
 		--background: #18191a;
 		--lighter-bg: #242526;

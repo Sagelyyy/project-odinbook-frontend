@@ -42,11 +42,40 @@
 		<span class="material-symbols-outlined share"> share </span>
 	</div>
 	{#if toggleComments}
-		<Comments bind:postID={post._id} />
+		<div class="comment-container">
+			<Comments bind:postID={post._id} />
+		</div>
 	{/if}
 </div>
 
 <style>
+	.comment-container {
+		max-height: 500px;
+		overflow-y: auto;
+
+		/* Chrome, Edge, and Safari */
+		&::-webkit-scrollbar {
+			width: 14px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: var(--mid-bg); /* color of the tracking area */
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: #888; /* color of the scroll thumb */
+			border-radius: 20px; /* roundness of the scroll thumb */
+			border: 4px solid var(--mid-bg); /* creates padding around scroll thumb */
+		}
+
+		&::-webkit-scrollbar-thumb:hover {
+			background-color: #555; /* color of the scroll thumb on hover */
+		}
+
+		/* Firefox */
+		scrollbar-width: thin;
+		scrollbar-color: #888 var(--mid-bg);
+	}
 	.like,
 	.comment,
 	.share {
