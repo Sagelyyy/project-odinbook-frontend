@@ -1,14 +1,37 @@
 <script>
+	// @ts-nocheck
+
 	export let data;
 	import Posts from './Posts.svelte';
 	import Login from './Login.svelte';
-	// @ts-ignore
-	$: ({ post } = data);
+	let post;
+
+	$: {
+		if (data) {
+			({ post } = data);
+			console.log(post);
+		} else {
+			post = undefined;
+		}
+	}
 </script>
 
 {#if post}
 	<Posts {post} />
-	<a href="/about">About</a>
 {:else}
 	<Login />
 {/if}
+
+<style>
+	:global(:root) {
+		--background: #18191a;
+		--lighter-bg: #242526;
+		--mid-bg: #3a3b3c;
+		--font-primary: #e4e6eb;
+		--grey-font: #b0b3b8;
+	}
+
+	:global(body) {
+		background-color: var(--background);
+	}
+</style>
