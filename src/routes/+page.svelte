@@ -4,6 +4,7 @@
 	export let data;
 	import Posts from './Posts.svelte';
 	import Login from './Login.svelte';
+	import PostForm from './PostForm.svelte';
 	let post;
 
 	$: {
@@ -13,9 +14,20 @@
 			post = undefined;
 		}
 	}
+
+	const fetchPosts = async () => {
+		const response = await fetch(`https://localhost:9000/api/posts/`, {
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+		data = await response.json();
+	};
 </script>
 
 {#if post}
+	<PostForm {fetchPosts} />
 	<Posts {post} />
 {:else}
 	<Login />

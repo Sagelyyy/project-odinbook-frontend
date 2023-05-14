@@ -35,6 +35,7 @@
 		<span
 			on:keyup={handlePost}
 			on:click|preventDefault={handlePost}
+			class:hasText={commentText !== ''}
 			class="material-symbols-outlined submit-btn"
 		>
 			send
@@ -51,6 +52,7 @@
 		transition: all 0.5s;
 	}
 
+	.hasText,
 	.submit-btn:hover {
 		color: #1877f2;
 	}

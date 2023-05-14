@@ -1,5 +1,4 @@
 <script>
-	import CommentForm from './CommentForm.svelte';
 	import Comments from './Comments.svelte';
 
 	/**
