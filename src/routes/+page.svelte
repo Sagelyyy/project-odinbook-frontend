@@ -37,6 +37,7 @@
 	:global(*) {
 		padding: 0;
 		margin: 0;
+		font-family: var(--font-family);
 	}
 
 	:global(:root) {
@@ -45,6 +46,7 @@
 		--mid-bg: #3a3b3c;
 		--font-primary: #e4e6eb;
 		--grey-font: #b0b3b8;
+		--font-family: 'Roboto', sans-serif;
 	}
 
 	:global(body) {

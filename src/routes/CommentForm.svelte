@@ -1,9 +1,12 @@
-<script>
+<script lang="ts">
 	// @ts-nocheck
+
+	import Error from './Error.svelte';
 
 	export let postID;
 	export let fetchComments;
 	let commentText = '';
+	let errors: errorOptns;
 
 	function onKeyUp(e) {
 		switch (e.key) {
@@ -24,11 +27,19 @@
 				content: commentText
 			})
 		});
-		commentText = '';
-		fetchComments();
+		let data = await res.json();
+		if (res.status == 200) {
+			commentText = '';
+			fetchComments();
+			errors = undefined;
+		} else {
+			errors = data.message;
+			console.log(errors);
+		}
 	}
 </script>
 
+<Error {errors} />
 <div class="comment-container">
 	<form action="">
 		<textarea bind:value={commentText} name="content" id="" cols="30" rows="4" />

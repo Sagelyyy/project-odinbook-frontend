@@ -23,7 +23,7 @@
 
 {#each data.comments as item (item._id)}
 	<div class="comment">
-		<img class="profile-picture" src={item.userId.profilePictureUrl} alt="Profile Picture" />
+		<img class="profile-picture" src={item.userId.profilePictureUrl} alt="Avatar" />
 		<div class="comment-content">
 			<span class="user-name">{item.userId.firstName}</span>
 			<p class="comment-text">{item.content}</p>

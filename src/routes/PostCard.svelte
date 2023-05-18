@@ -29,15 +29,18 @@
 	</div>
 	<div class="footer">
 		<span class="material-symbols-outlined like"> thumb_up</span>
-		<span
-			on:keyup={onKeyUp}
-			on:click={() => {
-				toggleComments = !toggleComments;
-			}}
-			class="material-symbols-outlined comment"
-		>
-			chat_bubble
-		</span>
+		<div>
+			<span
+				on:keyup={onKeyUp}
+				on:click={() => {
+					toggleComments = !toggleComments;
+				}}
+				class="material-symbols-outlined comment"
+			>
+				chat_bubble
+			</span>
+			<p>{post.commentCount > 0 ? post.commentCount.toString() : ''}</p>
+		</div>
 		<span class="material-symbols-outlined share"> share </span>
 	</div>
 	{#if toggleComments}
@@ -125,5 +128,10 @@
 		align-items: center;
 		display: flex;
 		justify-content: space-between;
+	}
+
+	.footer > div {
+		display: flex;
+		flex-direction: row;
 	}
 </style>

@@ -1,12 +1,13 @@
-<script>
+<script lang="ts">
+	import Error from './Error.svelte';
+	import type { errorOptns } from '../util/prop-types';
+
 	let postText = '';
-	/**
-	 * @type {() => void}
-	 */
-	export let fetchPosts;
+	let errors: errorOptns | undefined;
+	export let fetchPosts: Function;
 
 	async function handlePost() {
-		const res = await fetch(`https://localhost:9000/api/posts/`, {
+		const res: any = await fetch(`https://localhost:9000/api/posts/`, {
 			method: 'POST',
 			credentials: 'include',
 			headers: {
@@ -16,14 +17,22 @@
 				content: postText
 			})
 		});
-		postText = '';
-		fetchPosts();
+		let data = await res.json();
+		if (res.status == 200) {
+			postText = '';
+			fetchPosts();
+			errors = undefined;
+		} else {
+			errors = data.message;
+			console.log(errors);
+		}
 	}
 </script>
 
+<Error {errors} />
 <div class="post-form-container">
 	<form>
-		<input bind:value={postText} type="text" class="content" placeholder="What's on your mind?" />
+		<textarea bind:value={postText} class="content" placeholder="What's on your mind?" />
 		<button on:click|preventDefault={handlePost}>Submit</button>
 	</form>
 </div>
@@ -43,6 +52,18 @@
 	.post-form-container > form {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
+	}
+
+	.post-form-container > form > textarea {
+		background-color: var(--lighter-bg);
+		color: var(--font-primary);
+		padding: 10px;
+		resize: none;
+		border-radius: 10px;
+	}
+
+	.post-form-container > form > textarea:focus {
+		outline: none;
+		border-color: var(--grey-font);
 	}
 </style>
