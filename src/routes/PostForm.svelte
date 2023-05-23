@@ -1,10 +1,12 @@
 <script lang="ts">
 	import Error from './Error.svelte';
 	import type { errorOptns } from '../util/prop-types';
+	import { getContext } from 'svelte';
 
 	let postText = '';
 	let errors: errorOptns | undefined;
-	export let fetchPosts: Function;
+
+	const fetchPosts: Function = getContext('fetchPosts');
 
 	async function handlePost() {
 		const res: any = await fetch(`https://localhost:9000/api/posts/`, {
@@ -29,16 +31,47 @@
 	}
 </script>
 
-<Error {errors} />
+{#if errors}
+	<Error {errors} />
+{/if}
 <div class="post-form-container">
 	<form>
-		<textarea bind:value={postText} class="content" placeholder="What's on your mind?" />
-		<button on:click|preventDefault={handlePost}>Submit</button>
+		<textarea
+			bind:value={postText}
+			class="content"
+			placeholder="What's on your mind?"
+			cols="30"
+			rows="4"
+		/>
+		<span
+			on:keyup={handlePost}
+			on:click|preventDefault={handlePost}
+			class:hasText={postText !== ''}
+			class="material-symbols-outlined submit-btn"
+		>
+			send
+		</span>
 	</form>
 </div>
 
 <style>
+	.submit-btn {
+		position: relative;
+		bottom: 30px;
+		right: 5px;
+		width: fit-content;
+		cursor: pointer;
+		transition: all 0.5s;
+		align-self: flex-end;
+	}
+
+	.hasText,
+	.submit-btn:hover {
+		color: #1877f2;
+	}
 	.post-form-container {
+		position: sticky;
+		top: 0;
 		margin: 0 auto;
 		color: var(--font-primary);
 		background-color: var(--mid-bg);

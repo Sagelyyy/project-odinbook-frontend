@@ -1,6 +1,6 @@
 <script>
 	// @ts-nocheck
-
+	import { setContext } from 'svelte';
 	export let data;
 	import Posts from './Posts.svelte';
 	import Login from './Login.svelte';
@@ -17,6 +17,7 @@
 
 	const fetchPosts = async () => {
 		const response = await fetch(`https://localhost:9000/api/posts/`, {
+			method: 'GET',
 			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json'
@@ -24,11 +25,15 @@
 		});
 		data = await response.json();
 	};
+
+	setContext('fetchPosts', fetchPosts);
 </script>
 
 {#if post}
-	<PostForm {fetchPosts} />
-	<Posts {post} />
+	<div class="feed">
+		<PostForm />
+		<Posts {post} />
+	</div>
 {:else}
 	<Login />
 {/if}
@@ -51,5 +56,35 @@
 
 	:global(body) {
 		background-color: var(--background);
+	}
+
+	.feed {
+		margin: 0 auto;
+		overflow-y: auto;
+		overflow-x: hidden;
+		overflow-wrap: break-word;
+		max-height: 85vh;
+		/* Chrome, Edge, and Safari */
+		&::-webkit-scrollbar {
+			width: 14px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: var(--mid-bg); /* color of the tracking area */
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: #888; /* color of the scroll thumb */
+			border-radius: 20px; /* roundness of the scroll thumb */
+			border: 4px solid var(--mid-bg); /* creates padding around scroll thumb */
+		}
+
+		&::-webkit-scrollbar-thumb:hover {
+			background-color: #555; /* color of the scroll thumb on hover */
+		}
+
+		/* Firefox */
+		scrollbar-width: thin;
+		scrollbar-color: #888 var(--mid-bg);
 	}
 </style>

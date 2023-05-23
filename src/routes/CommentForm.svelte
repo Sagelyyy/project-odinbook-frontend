@@ -2,6 +2,9 @@
 	// @ts-nocheck
 
 	import Error from './Error.svelte';
+	import { getContext } from 'svelte';
+
+	const fetchPosts = getContext('fetchPosts');
 
 	export let postID;
 	export let fetchComments;
@@ -31,6 +34,7 @@
 		if (res.status == 200) {
 			commentText = '';
 			fetchComments();
+			fetchPosts();
 			errors = undefined;
 		} else {
 			errors = data.message;

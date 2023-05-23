@@ -1,16 +1,10 @@
-<script>
+<script lang="ts">
 	import Comments from './Comments.svelte';
 
-	/**
-	 * @type {any}
-	 */
-	export let post;
+	export let post: any;
 	let toggleComments = false;
 
-	/**
-	 * @param {{ key: any; }} e
-	 */
-	function onKeyUp(e) {
+	function onKeyUp(e: KeyboardEvent) {
 		switch (e.key) {
 			case 'Enter':
 				toggleComments = !toggleComments;
@@ -27,6 +21,7 @@
 	<div class="post-content">
 		<p>{post.content}</p>
 	</div>
+	<hr />
 	<div class="footer">
 		<span class="material-symbols-outlined like"> thumb_up</span>
 		<div>
@@ -86,6 +81,7 @@
 		border-radius: 5px;
 		width: 2rem;
 		text-align: center;
+		user-select: none;
 	}
 
 	.like:hover,
@@ -125,6 +121,7 @@
 		margin-bottom: 1rem;
 	}
 	.footer {
+		padding-top: 5px;
 		align-items: center;
 		display: flex;
 		justify-content: space-between;
