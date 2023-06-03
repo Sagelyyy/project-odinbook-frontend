@@ -1,14 +1,38 @@
 <script lang="ts">
 	import Comments from './Comments.svelte';
+	import { getContext } from 'svelte';
 
 	export let post: any;
 	let toggleComments = false;
+	let errors;
+
+	const fetchPosts = getContext('fetchPosts');
 
 	function onKeyUp(e: KeyboardEvent) {
 		switch (e.key) {
 			case 'Enter':
 				toggleComments = !toggleComments;
 				break;
+		}
+	}
+
+	async function handleLike(postID: string) {
+		const res = await fetch(`https://localhost:9000/api/posts/${postID}`, {
+			method: 'PUT',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				likes: 1
+			})
+		});
+		let data = await res.json();
+		if (res.status == 200) {
+			fetchPosts();
+		} else {
+			errors = data.message;
+			console.log(errors);
 		}
 	}
 </script>
@@ -23,7 +47,18 @@
 	</div>
 	<hr />
 	<div class="footer">
-		<span class="material-symbols-outlined like"> thumb_up</span>
+		<div>
+			<span
+				on:keyup={onKeyUp}
+				on:click={() => {
+					handleLike(post._id);
+				}}
+				class="material-symbols-outlined like"
+			>
+				thumb_up</span
+			>
+			<p>{post.likeCount > 0 ? post.likeCount.toString() : ''}</p>
+		</div>
 		<div>
 			<span
 				on:keyup={onKeyUp}
